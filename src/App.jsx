@@ -23,6 +23,9 @@ import AuditTrail from './pages/Admin/AuditTrail';
 import EscalationLog from './pages/Admin/EscalationLog';
 import AnalyticsDashboard from './pages/Admin/AnalyticsDashboard';
 
+import EmployeeApprovedGoals from './pages/Dashboard/EmployeeApprovedGoals';
+import EmployeeAnalytics from './pages/Dashboard/EmployeeAnalytics';
+
 function RoleBasedRedirect() {
   const { user } = useContext(AuthContext);
 
@@ -59,6 +62,8 @@ function App() {
 
             {/* Employee Routes */}
             <Route path="employee/goals" element={<ProtectedRoute allowedRoles={['EMPLOYEE']}><EmployeeDashboard /></ProtectedRoute>} />
+            <Route path="employee/approved" element={<ProtectedRoute allowedRoles={['EMPLOYEE']}><EmployeeApprovedGoals /></ProtectedRoute>} />
+            <Route path="employee/analytics" element={<ProtectedRoute allowedRoles={['EMPLOYEE']}><EmployeeAnalytics /></ProtectedRoute>} />
 
             {/* Goal Action Routes */}
             <Route path="goals/create" element={<ProtectedRoute allowedRoles={['EMPLOYEE']}><CreateGoal /></ProtectedRoute>} />

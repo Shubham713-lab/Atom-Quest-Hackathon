@@ -20,6 +20,17 @@ const STATUS_BADGE = {
   'DRAFT': 'bg-gray-100 text-gray-800 border-gray-200',
 };
 
+const formatTimelineDate = (dateString) => {
+  if (!dateString) return '—';
+  try {
+    const d = new Date(dateString);
+    if (isNaN(d.getTime())) return dateString;
+    return d.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
+  } catch {
+    return dateString;
+  }
+};
+
 const EmployeeDashboard = () => {
   const { user } = useContext(AuthContext);
   const [goals, setGoals] = useState([]);
@@ -214,7 +225,7 @@ const EmployeeDashboard = () => {
 
                     {/* Planned Target */}
                     <td className="px-5 py-4 text-gray-900 font-medium">
-                      {goal.target || '—'}
+                      {goal.uom === 'TIMELINE' ? formatTimelineDate(goal.target) : goal.target || '—'}
                     </td>
 
                     {/* Achievement & Score */}
@@ -223,7 +234,8 @@ const EmployeeDashboard = () => {
                         <span className="text-xs text-gray-500 block mb-0.5">Actual:</span>
                         {goal.achievement !== undefined && goal.achievement !== '' ? (
                           <span className="font-semibold text-gray-900">
-                            {goal.achievement}{goal.uom === 'PERCENTAGE' ? '%' : ''}
+                            {goal.uom === 'TIMELINE' ? formatTimelineDate(goal.achievement) : goal.achievement}
+                            {goal.uom === 'PERCENTAGE' ? '%' : ''}
                           </span>
                         ) : (
                           <span className="text-gray-400 text-xs italic">Not logged</span>
@@ -260,6 +272,11 @@ const EmployeeDashboard = () => {
                       <span className={`badge border ${STATUS_BADGE[goal.status] || STATUS_BADGE['DRAFT']}`}>
                         {goal.status || 'DRAFT'} {goal.isLocked && '🔒'}
                       </span>
+                      {goal.statusUpdatedBy && (
+                        <div className="text-xs text-gray-500 mt-1">
+                          By: <span className="font-medium text-gray-700">{goal.statusUpdatedBy}</span>
+                        </div>
+                      )}
                     </td>
 
                     {/* Actions & Manager Comments */}

@@ -61,6 +61,8 @@ const ManagerDashboard = () => {
       await updateDoc(goalRef, {
         status: newStatus,
         isLocked: newStatus === 'APPROVED',
+        statusUpdatedAt: new Date().toISOString(),
+        statusUpdatedBy: user.name || 'Manager',
         updatedAt: new Date().toISOString()
       });
       await addDoc(collection(db, 'auditLogs'), {
@@ -95,6 +97,8 @@ const ManagerDashboard = () => {
         await updateDoc(goalRef, {
           status: 'APPROVED',
           isLocked: true,
+          statusUpdatedAt: new Date().toISOString(),
+          statusUpdatedBy: user.name || 'Manager',
           updatedAt: new Date().toISOString()
         });
         await addDoc(collection(db, 'auditLogs'), {

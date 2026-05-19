@@ -48,6 +48,8 @@ const SidebarLayout = () => {
       case 'EMPLOYEE':
         return [
           { name: 'My Goals', path: '/employee/goals', icon: Target },
+          { name: 'Approved Goals', path: '/employee/approved', icon: CheckSquare },
+          { name: 'My Analytics', path: '/employee/analytics', icon: PieChart },
           { name: 'Create Goal', path: '/goals/create', icon: PlusCircle },
         ];
       default:

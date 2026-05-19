@@ -1,4 +1,4 @@
-import { useState, useContext } from 'react';
+import { useState, useContext, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext';
 import { Target, AlertCircle, Eye, EyeOff } from 'lucide-react';
@@ -13,10 +13,17 @@ const Login = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
-  const { login, register } = useContext(AuthContext);
+  const { user, login, register } = useContext(AuthContext);
   const navigate = useNavigate();
   const location = useLocation();
   const from = location.state?.from?.pathname || '/';
+
+  // Wait for the AuthContext to fully update user state before navigating
+  useEffect(() => {
+    if (user) {
+      navigate(from, { replace: true });
+    }
+  }, [user, navigate, from]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -33,7 +40,8 @@ const Login = () => {
       } else {
         await login(email, password);
       }
-      navigate(from, { replace: true });
+      // Note: We don't manually navigate here. We wait for the useEffect above to trigger
+      // once the AuthContext finishes fetching user roles and updates the global user state.
     } catch (err) {
       // Make Firebase errors more user-friendly
       const msg = err.code === 'auth/user-not-found' || err.code === 'auth/wrong-password' || err.code === 'auth/invalid-credential'
@@ -42,7 +50,6 @@ const Login = () => {
         ? 'This email is already registered. Please sign in.'
         : err.message || 'Authentication failed';
       setError(msg);
-    } finally {
       setLoading(false);
     }
   };
