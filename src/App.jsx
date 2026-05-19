@@ -13,6 +13,7 @@ import CheckInGoal from './pages/Goals/CheckInGoal';
 
 // Manager Routes
 import ManagerDashboard from './pages/Dashboard/ManagerDashboard';
+import ManagerApprovedGoals from './pages/Dashboard/ManagerApprovedGoals';
 import CreateSharedGoal from './pages/Goals/CreateSharedGoal';
 
 // Admin Routes
@@ -59,6 +60,7 @@ function App() {
 
             {/* Manager Routes */}
             <Route path="manager/team" element={<ProtectedRoute allowedRoles={['MANAGER']}><ManagerDashboard /></ProtectedRoute>} />
+            <Route path="manager/approved" element={<ProtectedRoute allowedRoles={['MANAGER']}><ManagerApprovedGoals /></ProtectedRoute>} />
 
             {/* Employee Routes */}
             <Route path="employee/goals" element={<ProtectedRoute allowedRoles={['EMPLOYEE']}><EmployeeDashboard /></ProtectedRoute>} />

@@ -41,10 +41,15 @@ const ManagerDashboard = () => {
     try {
       setLoading(true);
       const goalsRef = collection(db, 'goals');
+      // In firestore, inequality filters (!=) require an index. 
+      // To avoid index issues during the hackathon, fetch all and filter in memory.
       const querySnapshot = await getDocs(goalsRef);
       const goalsData = [];
       querySnapshot.forEach((d) => {
-        goalsData.push({ id: d.id, ...d.data() });
+        const data = d.data();
+        if (data.status !== 'APPROVED') {
+          goalsData.push({ id: d.id, ...data });
+        }
       });
       setGoals(goalsData);
       setError(null);

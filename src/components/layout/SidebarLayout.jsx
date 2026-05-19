@@ -43,6 +43,7 @@ const SidebarLayout = () => {
       case 'MANAGER':
         return [
           { name: 'Team Dashboard', path: '/manager/team', icon: LayoutDashboard },
+          { name: 'Approved Goals', path: '/manager/approved', icon: CheckSquare },
           { name: 'Push Shared KPI', path: '/goals/shared/create', icon: Target },
         ];
       case 'EMPLOYEE':
