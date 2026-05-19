@@ -1,0 +1,43 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-gray-50 text-gray-900 font-sans antialiased;
+  }
+  /* Smooth focus outlines for accessibility */
+  *:focus-visible {
+    @apply outline-none ring-2 ring-primary-500 ring-offset-2;
+  }
+}
+
+@layer components {
+  /* Reusable input style */
+  .input {
+    @apply w-full px-4 py-2 border border-gray-300 rounded-lg text-sm
+           focus:ring-2 focus:ring-primary-500 focus:border-primary-500
+           disabled:bg-gray-100 disabled:cursor-not-allowed transition;
+  }
+  /* Primary button */
+  .btn-primary {
+    @apply inline-flex items-center justify-center gap-2 px-5 py-2.5 
+           bg-primary-600 text-white text-sm font-semibold rounded-lg 
+           hover:bg-primary-700 active:scale-[0.98] transition-all
+           disabled:bg-primary-300 disabled:cursor-not-allowed;
+  }
+  /* Secondary / ghost button */
+  .btn-secondary {
+    @apply inline-flex items-center justify-center gap-2 px-5 py-2.5
+           border border-gray-300 text-gray-700 text-sm font-medium rounded-lg
+           hover:bg-gray-50 active:scale-[0.98] transition-all;
+  }
+  /* Card shell */
+  .card {
+    @apply bg-white rounded-xl shadow-sm border border-gray-100 p-6;
+  }
+  /* Badge helpers */
+  .badge {
+    @apply inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold;
+  }
+}
